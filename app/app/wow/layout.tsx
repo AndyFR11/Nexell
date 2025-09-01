@@ -1,11 +1,11 @@
 import Sidebar from "@/components/wow/sidebar";
 import { CampaignsConfig, ISectionConfig, ISections } from "@/lib/campaign.config";
-import { createClient } from "@/lib/supabase/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export interface WowLayoutProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export default async function WowLayout({ children }: WowLayoutProps) {
-    const supabase = await createClient();
+    const supabase = await createSupabaseServerClient();
     
     // Get the roles of the user
     const response_roles = await supabase.from('roles').select();

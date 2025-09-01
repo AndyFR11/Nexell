@@ -1,35 +1,45 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GetBusinessSchema } from "@/lib/backend/business.dto";
 import { IResponse } from "@/lib/backend/utils";
-import { createClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient } from "@/lib/supabase/server";
 
+
+/**
+ * 
+ * @param req - Reguest a business information element
+ * @returns Business information element
+ */
 export async function GET(req: NextRequest) {
     try {
-        // const payload  = GetBusinessSchema.safeParse(req.body);
-        if (false) {
+        const supabase = createSupabaseAdminClient();
+        const {error: error_base, data: data_base }  =  await supabase
+            .from('base')
+            .select()
+            .is('owner_user_id', null)
+            .order('counter_consults', { ascending: true })
+            .limit(1);
+        
+        if (error_base) {
             const response: IResponse = {
                 ok: false,
                 message: {
-                    es: 'No se pudo obtener informacion de la empresa RUC',
-                }
+                    es: 'Error obteniendo un elemento'
+                },
+                error: 'Error getting new business information',
             }
-            
-            return NextResponse.json(response, { status: 200 })
+            return NextResponse.json(response, {status: 500 })
         }
 
-        const supabase = await createClient();
-        const data: any =  await supabase.from('base').select().eq('consulted', false).limit(1);
-        
-        if (data.data.length > 0) {
-            await supabase.from('base').update({ consulted: true }).eq('id', data.data[0].id);
-            console.log(`${data.data} marked as consulted`);            
-            return NextResponse.json(data.data[0], { status: 200 });
-        
+        if (data_base && data_base.length > 0) {
+            await supabase.from('base').update({ consulted: true }).eq('id', data_base[0].id);
+            
+
+            console.log(`${data_base} marked as consulted`);
+            return NextResponse.json(data_base[0], { status: 200 });
         } else {
             const response: IResponse = {
                 ok: false,
                 message: {
-                    es: 'No hay informacion disponible'
+                    es: 'Toda la base ya fue assignada'
                 },
                 error: 'No data found',
             }
@@ -40,9 +50,9 @@ export async function GET(req: NextRequest) {
         const response: IResponse =  {
             ok: false,
             message: {
-                es: 'Error getting information'
+                es: 'Error de servidor'
             },
-            error: JSON.stringify(error)
+            error: error
         }
         return NextResponse.json(response, { status: 400 });
     }

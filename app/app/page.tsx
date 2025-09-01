@@ -1,8 +1,8 @@
-import { createClient } from "@/lib/supabase/server"
+import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { IProfile } from "@/lib/utils";
 
 export default async function AppPage() {
-  const supabase = await createClient();
+  const supabase = await createSupabaseServerClient();
   const response_profile = await supabase.from('profiles').select();
   
   // Get the first profile if not exist keep undefined

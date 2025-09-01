@@ -1,14 +1,13 @@
 import { IResponse } from "@/lib/backend/utils";
-import { createClient } from "@/lib/supabase/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 
 
 export async function GET(req: NextRequest) {
     try {
-        const supabase = await createClient();
+        const supabase = await createSupabaseServerClient();
         const response_employees = await supabase.from('supervisors').select();
-        console.log(response_employees.data);
         const employees: string[] = response_employees.data ? response_employees.data.map(item => item.employee_id) : [];
         
         if (employees.length <= 0) {

@@ -4,11 +4,10 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/r
 import { DropdownMenuContent } from "./ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import * as React from 'react'
-import { ICampaigns, ICampaignConfig } from "@/lib/campaign.config";
 
 export interface TopMenuProps extends React.HTMLAttributes<HTMLDivElement> {
-    options: Partial<ICampaigns>,
-    default_opt: ICampaignConfig,
+    // options: Partial<ICampaigns>,
+    // default_opt: ICampaignConfig,
     user: Partial<{
         username: string,
         alias: string,
@@ -16,16 +15,16 @@ export interface TopMenuProps extends React.HTMLAttributes<HTMLDivElement> {
     }>
 }
 
-export default function TopMenu({ options, default_opt, user}: TopMenuProps) {
-    const router = useRouter();
-    const [open, setOpen] = React.useState(false);
-    const [isPending, startTransition] = React.useTransition();
-    const handleSelect = (path: string) => {
-        setOpen(false); // Close the dropdown
-        startTransition(() => {
-        router.push(path);
-        });
-    };
+export default function TopMenu({user}: TopMenuProps) {
+    // const router = useRouter();
+    // const [open, setOpen] = React.useState(false);
+    // const [isPending, startTransition] = React.useTransition();
+    // const handleSelect = (path: string) => {
+    //     setOpen(false); // Close the dropdown
+    //     startTransition(() => {
+    //     router.push(path);
+    //     });
+    // };
     return (
         <div className="flex flex-row justify-between items-center gap-2 bg-secondary px-6 py-3 w-screen">
             <div className="flex flex-row gap-8">
@@ -33,7 +32,7 @@ export default function TopMenu({ options, default_opt, user}: TopMenuProps) {
                     <h1 className="hidden sm:block text-lg">Nexell</h1>
                     <img src={'https://as2.ftcdn.net/v2/jpg/03/75/18/87/1000_F_375188790_E8KKuL2KvjhPQJhKAJ7MDFbo25pQpvQt.jpg'} className="size-8" />
                 </div>
-                <DropdownMenu>
+                {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <button
                             className="bg-accent text-sm"
@@ -53,8 +52,8 @@ export default function TopMenu({ options, default_opt, user}: TopMenuProps) {
                             )
                         }
                     </DropdownMenuContent>
-                </DropdownMenu>
-                { isPending && <div>Cargando...</div> }
+                </DropdownMenu> */}
+                {/* { isPending && <div>Cargando...</div> } */}
             </div>
 
             <div className="flex flex-row gap-4">
