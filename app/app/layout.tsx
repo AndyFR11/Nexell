@@ -9,9 +9,8 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   const supabase = await createSupabaseServerClient();
-
+  
   // Get the profile of the current user
   const response_profile  = await supabase.from('profiles').select();
   const profile: Partial<IProfile> = (response_profile.data && response_profile.data.length >= 1) ? response_profile.data[0] : {}
@@ -20,9 +19,7 @@ export default async function AppLayout({
   const { error: error_modules, data: data_modules } = await supabase.from('modules').select();
   
   // Get the modules information for which the user has access
-  // let module_options: Partial<ICampaigns> = {}; 
   let module_roles_by_module: Record<string, any> = {}
-  // let default_module: undefined | ICampaignConfig = undefined; 
   
   // We get the roles by each module access
   if (data_modules) {
@@ -40,18 +37,7 @@ export default async function AppLayout({
         console.log(data)
       }
     }
-    console.log(module_roles_by_module);
-
-    // module_roles_by_module = response_modules.data.reduce((prev: any, current: { module: string }, index: number) => {
-    //   if (!prev[current.module] && CampaignsConfig[current.module]) {
-    //     prev[current.module] = CampaignsConfig[current.module];
-        
-    //     // if (!default_module) {
-    //     //   default_module = CampaignsConfig[current.module]
-    //     // }
-    //   }
-    //   return prev;
-    // }, {})
+    
   }
 
 
@@ -72,7 +58,7 @@ export default async function AppLayout({
           </>
         )
       }
-      <div className="w-20">
+      <div className="flex flex-row w-full h-full">
         {
           (module_roles_by_module) ? (
             <Sidebar options={module_roles_by_module}>
