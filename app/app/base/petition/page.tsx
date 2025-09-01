@@ -1,9 +1,12 @@
+"use client";
 
+import React from "react";
+import PetitionData from "./petition-data";
 
 export default function PetitionPage() {
-    return (
-        <div>
-            Welcome to request for a new business information
-        </div>
-    )
+  return (
+    <div className="p-4 w-full">
+      <PetitionData />
+    </div>
+  );
 }
