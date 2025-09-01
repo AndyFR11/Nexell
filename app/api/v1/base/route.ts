@@ -30,11 +30,19 @@ export async function GET(req: NextRequest) {
         }
 
         if (data_base && data_base.length > 0) {
-            await supabase.from('base').update({ consulted: true }).eq('id', data_base[0].id);
-            
+            if (!data_base[0].consulted)
+                await supabase.from('base').update({ consulted: true }).eq('id', data_base[0].id);
 
-            console.log(`${data_base} marked as consulted`);
-            return NextResponse.json(data_base[0], { status: 200 });
+            const response: IResponse = {
+                ok: true,
+                message: {
+                    es: 'Nueva informacion de empresa'
+                },
+                data: data_base[0],
+                error: 'No data found',
+            }
+
+            return NextResponse.json(response, { status: 200 });
         } else {
             const response: IResponse = {
                 ok: false,
@@ -54,7 +62,7 @@ export async function GET(req: NextRequest) {
             },
             error: error
         }
-        return NextResponse.json(response, { status: 400 });
+        return NextResponse.json(response, { status: 500 });
     }
 }
 

@@ -56,7 +56,7 @@ export default function Sidebar({ options }: ISidebarProps) {
             </Accordion.Trigger>
           </Accordion.Header>
           <Accordion.Content className="space-y-2 pl-4">
-            <SidebarButton icon={<HomeIcon />} label="Preferencias" href="wow/petition" />
+            <SidebarButton icon={<HomeIcon />} label="Preferencias" href="app/entel/prospects" />
           </Accordion.Content>
         </Accordion.Item>
       </Accordion.Root>

@@ -1,12 +1,11 @@
 import Pipeline from "@/components/entel/prospects/pipeline";
 
-export default function EntelPage() {
+
+
+export default function ProspectsPage() {
     return (
         <div>
-
             <Pipeline></Pipeline>
-            {/* <ProspectCard data={{}} id="2392" stage="BASE" />
-             */}
         </div>
     )
 }

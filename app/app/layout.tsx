@@ -33,8 +33,6 @@ export default async function AppLayout({
             roles: data[0].roles
           };
         }
-
-        console.log(data)
       }
     }
     
